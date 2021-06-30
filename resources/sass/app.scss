@@ -73,3 +73,21 @@ body {
     overflow: hidden;
     border-style: none;
 }
+
+.todos-headers {
+    font-family: "Akaya Kanadaka", cursive;
+}
+
+.todo-form-ctrl:focus {
+    border-color: none;
+}
+
+.text-area {
+    resize: none;
+}
+.alert {
+    margin-bottom: 1px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 15px;
+}
