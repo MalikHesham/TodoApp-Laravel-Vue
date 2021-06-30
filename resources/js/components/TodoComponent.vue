@@ -12,13 +12,12 @@
                     id="exampleFormControlInput1"
                     placeholder="Ex: get better in front-end"
                 />
-
                 <button
-                    class="btn btn-success btn-sm"
+                    class="btn btn-success btn-sm border-success"
                     type="submit"
                     id="button-addon2"
                 >
-                    Create New Todo
+                    <strong>Create New Todo</strong>
                 </button>
             </div>
         </form>

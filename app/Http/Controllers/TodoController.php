@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoValidationRequest;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 
@@ -30,16 +31,9 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $this->validate($request,
-        [
-            'title' => 'required | min:3'
-        ],
-        [
-            'title.required' => 'Todo input field is required!',
-            'title.min' => 'Todo title must be at least 3 characters'
-        ]
-        );
+    public function store(TodoValidationRequest $request) {
+
+        $request->validated();
 
         Todo::create($request->all());
     }

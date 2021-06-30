@@ -1893,7 +1893,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -37666,14 +37665,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success btn-sm",
-              attrs: { type: "submit", id: "button-addon2" }
-            },
-            [_vm._v("\n                Create New Todo\n            ")]
-          )
+          _vm._m(0)
         ])
       ]
     ),
@@ -37712,7 +37704,21 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-success btn-sm border-success",
+        attrs: { type: "submit", id: "button-addon2" }
+      },
+      [_c("strong", [_vm._v("Create New Todo")])]
+    )
+  }
+]
 render._withStripped = true
 
 
