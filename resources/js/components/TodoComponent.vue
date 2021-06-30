@@ -50,7 +50,11 @@
                 <tr>
                     <!-- The todo status toggling -->
                     <td>
-                        <span v-if="todo.is_todo_done == false">
+                        <span
+                            v-if="
+                                todo.is_todo_done == false && editing != todo.id
+                            "
+                        >
                             <i
                                 class="far fa-circle  fakeCheckBox"
                                 v-on:click="toggleTodoClick(todo)"
@@ -73,17 +77,49 @@
                         <s v-if="todo.is_todo_done" class="text-muted">
                             <h6>{{ todo.title }}</h6>
                         </s>
-                        <h6 v-if="!todo.is_todo_done">
-                            {{ todo.title }}
-                        </h6>
+
+                        <span>
+                            <h6
+                                v-if="
+                                    !todo.is_todo_done &&
+                                        (editing == false || editing != todo.id)
+                                "
+                            >
+                                {{ todo.title }}
+                            </h6>
+                            <input
+                                type="text"
+                                v-if="editing == todo.id && !is_todo_done"
+                                v-model="todo.title"
+                            />
+                        </span>
                     </td>
                     <!-- End of todo title rendering -->
 
                     <!-- Actions: Editing and Deleting the todo -->
                     <td class="text-right">
-                        <button class="btn btn-warning btn-sm text-bolder">
+                        <button
+                            class="btn btn-warning btn-sm text-bolder"
+                            :disabled="todo.is_todo_done == 1"
+                            v-on:click="editing = todo.id"
+                            v-if="editing != todo.id || editing == false"
+                        >
                             Edit <i class="far fa-edit"></i>
                         </button>
+
+                        <button
+                            class="btn btn-success btn-sm"
+                            v-if="
+                                editing == todo.id &&
+                                    editing != false &&
+                                    !todo.is_todo_done
+                            "
+                            v-on:click="editing = false"
+                        >
+                            Update
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+
                         <button class="btn btn-danger btn-sm">
                             Delete <i class="far fa-trash-alt"></i>
                         </button>
@@ -103,7 +139,8 @@ export default {
             form: new Form({
                 title: ""
             }),
-            allTodos: ""
+            allTodos: "",
+            editing: false
         };
     },
     created() {

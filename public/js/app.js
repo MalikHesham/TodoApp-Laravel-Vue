@@ -1942,6 +1942,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["user"],
   data: function data() {
@@ -1949,7 +1985,8 @@ __webpack_require__.r(__webpack_exports__);
       form: new Form({
         title: ""
       }),
-      allTodos: ""
+      allTodos: "",
+      editing: false
     };
   },
   created: function created() {
@@ -37770,7 +37807,7 @@ var render = function() {
           return _c("tbody", { key: todo.id, staticClass: "w-100" }, [
             _c("tr", [
               _c("td", [
-                todo.is_todo_done == false
+                todo.is_todo_done == false && _vm.editing != todo.id
                   ? _c("span", [
                       _c("i", {
                         staticClass: "far fa-circle  fakeCheckBox",
@@ -37813,18 +37850,90 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                !todo.is_todo_done
-                  ? _c("h6", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(todo.title) +
-                          "\n                    "
-                      )
-                    ])
-                  : _vm._e()
+                _c("span", [
+                  !todo.is_todo_done &&
+                  (_vm.editing == false || _vm.editing != todo.id)
+                    ? _c("h6", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(todo.title) +
+                            "\n                        "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.editing == todo.id && !_vm.is_todo_done
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: todo.title,
+                            expression: "todo.title"
+                          }
+                        ],
+                        attrs: { type: "text" },
+                        domProps: { value: todo.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(todo, "title", $event.target.value)
+                          }
+                        }
+                      })
+                    : _vm._e()
+                ])
               ]),
               _vm._v(" "),
-              _vm._m(1, true)
+              _c("td", { staticClass: "text-right" }, [
+                _vm.editing != todo.id || _vm.editing == false
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-warning btn-sm text-bolder",
+                        attrs: { disabled: todo.is_todo_done == 1 },
+                        on: {
+                          click: function($event) {
+                            _vm.editing = todo.id
+                          }
+                        }
+                      },
+                      [
+                        _vm._v("\n                        Edit "),
+                        _c("i", { staticClass: "far fa-edit" })
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.editing == todo.id &&
+                _vm.editing != false &&
+                !todo.is_todo_done
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-sm",
+                        on: {
+                          click: function($event) {
+                            _vm.editing = false
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Update\n                        "
+                        ),
+                        _c("i", {
+                          staticClass: "fa fa-refresh",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._m(1, true)
+              ])
             ])
           ])
         })
@@ -37856,16 +37965,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-right" }, [
-      _c("button", { staticClass: "btn btn-warning btn-sm text-bolder" }, [
-        _vm._v("\n                        Edit "),
-        _c("i", { staticClass: "far fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger btn-sm" }, [
-        _vm._v("\n                        Delete "),
-        _c("i", { staticClass: "far fa-trash-alt" })
-      ])
+    return _c("button", { staticClass: "btn btn-danger btn-sm" }, [
+      _vm._v("\n                        Delete "),
+      _c("i", { staticClass: "far fa-trash-alt" })
     ])
   }
 ]
