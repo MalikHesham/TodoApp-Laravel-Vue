@@ -1893,7 +1893,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["user"],
   data: function data() {
     return {
       form: new Form({
@@ -1901,6 +1934,9 @@ __webpack_require__.r(__webpack_exports__);
       }),
       allTodos: ""
     };
+  },
+  created: function created() {
+    console.log(this.user);
   },
   methods: {
     getAllTodos: function getAllTodos() {
@@ -37649,7 +37685,7 @@ var render = function() {
             attrs: {
               type: "text",
               id: "exampleFormControlInput1",
-              placeholder: "Ex: get better in front-end"
+              placeholder: "Ex: get better in front-end coloring"
             },
             domProps: { value: _vm.form.title },
             on: {
@@ -37693,14 +37729,32 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c(
-      "div",
-      { staticClass: "w-50" },
-      _vm._l(_vm.allTodos, function(todo) {
-        return _c("div", { key: todo.id, staticClass: "w-100" }, [
-          _vm._v("\n            " + _vm._s(todo.title) + "\n        ")
-        ])
-      }),
-      0
+      "table",
+      { staticClass: "table table-hover table-primary" },
+      [
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._l(_vm.allTodos, function(todo) {
+          return _c("tbody", { key: todo.id, staticClass: "w-100" }, [
+            _c("tr", [
+              todo.is_todo_done == false
+                ? _c("td", [_c("i", { staticClass: "far fa-circle" })])
+                : _vm._e(),
+              _vm._v(" "),
+              todo.is_todo_done == true
+                ? _c("td", [_vm._m(2, true)])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-center" }, [
+                _vm._v(_vm._s(todo.title))
+              ]),
+              _vm._v(" "),
+              _vm._m(3, true)
+            ])
+          ])
+        })
+      ],
+      2
     )
   ])
 }
@@ -37717,6 +37771,51 @@ var staticRenderFns = [
       },
       [_c("strong", [_vm._v("Create New Todo")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+          _vm._v("Task to be done")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+          _vm._v("Actions")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", {
+        staticClass: "far fa-check-circle",
+        staticStyle: { color: "green" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-right" }, [
+      _c("button", { staticClass: "btn btn-warning btn-sm text-bolder" }, [
+        _vm._v("\n                        Edit "),
+        _c("i", { staticClass: "far fa-edit" })
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger btn-sm" }, [
+        _vm._v("\n                        Delete "),
+        _c("i", { staticClass: "far fa-trash-alt" })
+      ])
+    ])
   }
 ]
 render._withStripped = true

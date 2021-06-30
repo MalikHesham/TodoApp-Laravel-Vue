@@ -23,7 +23,7 @@ class TodoValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required | min:3'
+            'title' => 'required | min:3 | unique:todos'
         ];
     }
 }

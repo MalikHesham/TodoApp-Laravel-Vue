@@ -7,8 +7,9 @@
         <h4 class="text-white todos-headers">
             Where all of your todos are easily organized
         </h4>
-
-        <todo-component></todo-component>
+        @if(Auth::check())
+        <todo-component :user="{{Auth::user()}}"></todo-component>
+        @endif
     </div>
 </div>
 @endsection

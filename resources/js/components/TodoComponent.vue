@@ -10,7 +10,7 @@
                     type="text"
                     class="form-control"
                     id="exampleFormControlInput1"
-                    placeholder="Ex: get better in front-end"
+                    placeholder="Ex: get better in front-end coloring"
                 />
                 <button
                     class="btn btn-success btn-sm border-success"
@@ -38,16 +38,49 @@
         </div>
 
         <!-- The rest of the CRUD operations table -->
-        <div class="w-50">
-            <div v-for="todo in allTodos" :key="todo.id" class="w-100">
-                {{ todo.title }}
-            </div>
-        </div>
+        <table class="table table-hover table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="text-center">Task to be done</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody v-for="todo in allTodos" :key="todo.id" class="w-100">
+                <tr>
+                    <!-- The todo status -->
+                    <td v-if="todo.is_todo_done == false">
+                        <i class="far fa-circle"></i>
+                    </td>
+                    <td v-if="todo.is_todo_done == true">
+                        <a href="#">
+                            <i
+                                class="far fa-check-circle"
+                                style="color:green"
+                            ></i>
+                        </a>
+                    </td>
+
+                    <!-- The todo text -->
+                    <td class="text-center">{{ todo.title }}</td>
+
+                    <td class="text-right">
+                        <button class="btn btn-warning btn-sm text-bolder">
+                            Edit <i class="far fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                            Delete <i class="far fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
 <script>
 export default {
+    props: ["user"],
     data() {
         return {
             form: new Form({
@@ -55,6 +88,9 @@ export default {
             }),
             allTodos: ""
         };
+    },
+    created() {
+        console.log(this.user);
     },
     methods: {
         getAllTodos() {
