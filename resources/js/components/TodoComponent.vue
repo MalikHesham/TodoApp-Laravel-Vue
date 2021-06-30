@@ -82,7 +82,7 @@
                             <h6
                                 v-if="
                                     !todo.is_todo_done &&
-                                        (editing == false || editing != todo.id)
+                                        (editing == -1 || editing != todo.id)
                                 "
                             >
                                 {{ todo.title }}
@@ -91,6 +91,7 @@
                                 type="text"
                                 v-if="editing == todo.id && !is_todo_done"
                                 v-model="todo.title"
+                                @keydown="form.errors.clearErrors('title')"
                             />
                         </span>
                     </td>
@@ -100,9 +101,9 @@
                     <td class="text-right">
                         <button
                             class="btn btn-warning btn-sm text-bolder"
+                            v-if="editing != todo.id || editing == -1"
                             :disabled="todo.is_todo_done == 1"
                             v-on:click="editing = todo.id"
-                            v-if="editing != todo.id || editing == false"
                         >
                             Edit <i class="far fa-edit"></i>
                         </button>
@@ -111,10 +112,10 @@
                             class="btn btn-success btn-sm"
                             v-if="
                                 editing == todo.id &&
-                                    editing != false &&
+                                    editing != -1 &&
                                     !todo.is_todo_done
                             "
-                            v-on:click="editing = false"
+                            v-on:click="updateTodo(todo)"
                         >
                             Update
                             <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -140,7 +141,7 @@ export default {
                 title: ""
             }),
             allTodos: "",
-            editing: false
+            editing: -1
         };
     },
     created() {
@@ -174,11 +175,22 @@ export default {
             event.is_todo_done = !event.is_todo_done;
             let newData = new FormData();
 
-            newData.append("_method", "PATCH");
+            newData.append("_method", "PUT");
             event.is_todo_done == true && newData.append("is_todo_done", 1);
             event.is_todo_done == false && newData.append("is_todo_done", 0);
 
-            axios.post("/api/todo/" + event.id, newData);
+            axios.post("/api/todo/status/" + event.id, newData);
+        },
+        updateTodo(event) {
+            this.editing = -1;
+            let data = new FormData();
+
+            data.append("_method", "PATCH");
+            data.append("title", event.title);
+            axios.post("/api/todo/" + event.id, data).catch(error => {
+                this.form.errors.setErrors(error.response.data.errors);
+            });
+            this.getAllTodos();
         }
     },
     mounted() {

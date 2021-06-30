@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
+use App\Models\Todo;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resource('todo', TodoController::class);
+
+Route::put('todo/status/{id}', function(Request $request, $id) {
+    $todo = Todo::findOrFail($id);
+    $todo ->update($request->all());
+    $todo->save();
+});

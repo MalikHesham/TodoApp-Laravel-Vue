@@ -1978,6 +1978,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["user"],
   data: function data() {
@@ -1986,7 +1987,7 @@ __webpack_require__.r(__webpack_exports__);
         title: ""
       }),
       allTodos: "",
-      editing: false
+      editing: -1
     };
   },
   created: function created() {
@@ -2018,10 +2019,22 @@ __webpack_require__.r(__webpack_exports__);
     toggleTodoClick: function toggleTodoClick(event) {
       event.is_todo_done = !event.is_todo_done;
       var newData = new FormData();
-      newData.append("_method", "PATCH");
+      newData.append("_method", "PUT");
       event.is_todo_done == true && newData.append("is_todo_done", 1);
       event.is_todo_done == false && newData.append("is_todo_done", 0);
-      axios.post("/api/todo/" + event.id, newData);
+      axios.post("/api/todo/status/" + event.id, newData);
+    },
+    updateTodo: function updateTodo(event) {
+      var _this3 = this;
+
+      this.editing = -1;
+      var data = new FormData();
+      data.append("_method", "PATCH");
+      data.append("title", event.title);
+      axios.post("/api/todo/" + event.id, data)["catch"](function (error) {
+        _this3.form.errors.setErrors(error.response.data.errors);
+      });
+      this.getAllTodos();
     }
   },
   mounted: function mounted() {
@@ -37852,7 +37865,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", [
                   !todo.is_todo_done &&
-                  (_vm.editing == false || _vm.editing != todo.id)
+                  (_vm.editing == -1 || _vm.editing != todo.id)
                     ? _c("h6", [
                         _vm._v(
                           "\n                            " +
@@ -37875,6 +37888,9 @@ var render = function() {
                         attrs: { type: "text" },
                         domProps: { value: todo.title },
                         on: {
+                          keydown: function($event) {
+                            return _vm.form.errors.clearErrors("title")
+                          },
                           input: function($event) {
                             if ($event.target.composing) {
                               return
@@ -37888,7 +37904,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "text-right" }, [
-                _vm.editing != todo.id || _vm.editing == false
+                _vm.editing != todo.id || _vm.editing == -1
                   ? _c(
                       "button",
                       {
@@ -37908,7 +37924,7 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.editing == todo.id &&
-                _vm.editing != false &&
+                _vm.editing != -1 &&
                 !todo.is_todo_done
                   ? _c(
                       "button",
@@ -37916,7 +37932,7 @@ var render = function() {
                         staticClass: "btn btn-success btn-sm",
                         on: {
                           click: function($event) {
-                            _vm.editing = false
+                            return _vm.updateTodo(todo)
                           }
                         }
                       },
