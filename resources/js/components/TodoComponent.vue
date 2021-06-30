@@ -17,13 +17,13 @@
                     type="submit"
                     id="button-addon2"
                 >
-                    <strong>Create New Todo</strong>
+                    Create New Todo
                 </button>
             </div>
         </form>
         <!-- Error message div -->
         <div
-            class="card w-100 alert alert-danger alert-sm"
+            class="card w-100 alert alert-danger alert-sm mb-1"
             role="alert"
             v-if="form.errors.hasErrors('title')"
         >
@@ -38,32 +38,48 @@
         </div>
 
         <!-- The rest of the CRUD operations table -->
-        <table class="table table-hover table-primary">
+        <table class="table table-hover table-dark">
             <thead>
                 <tr>
                     <th scope="col">Status</th>
-                    <th scope="col" class="text-center">Task to be done</th>
+                    <th scope="col" class="text-center">Task</th>
                     <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody v-for="todo in allTodos" :key="todo.id" class="w-100">
                 <tr>
-                    <!-- The todo status -->
-                    <td v-if="todo.is_todo_done == false">
-                        <i class="far fa-circle"></i>
-                    </td>
-                    <td v-if="todo.is_todo_done == true">
-                        <a href="#">
+                    <!-- The todo status toggling -->
+                    <td>
+                        <span v-if="todo.is_todo_done == false">
                             <i
-                                class="far fa-check-circle"
-                                style="color:green"
+                                class="far fa-circle  fakeCheckBox"
+                                v-on:click="toggleTodoClick(todo)"
                             ></i>
-                        </a>
+                        </span>
+                        <span v-if="todo.is_todo_done == true">
+                            <i
+                                v-on:click="toggleTodoClick(todo)"
+                                class="far fa-check-circle fakeCheckBox"
+                                style="color:#1aff1a"
+                            >
+                                Done
+                            </i>
+                        </span>
                     </td>
+                    <!-- End of status toggling -->
 
-                    <!-- The todo text -->
-                    <td class="text-center">{{ todo.title }}</td>
+                    <!-- The todo title text -->
+                    <td class="text-center">
+                        <s v-if="todo.is_todo_done" class="text-muted">
+                            <h6>{{ todo.title }}</h6>
+                        </s>
+                        <h6 v-if="!todo.is_todo_done">
+                            {{ todo.title }}
+                        </h6>
+                    </td>
+                    <!-- End of todo title rendering -->
 
+                    <!-- Actions: Editing and Deleting the todo -->
                     <td class="text-right">
                         <button class="btn btn-warning btn-sm text-bolder">
                             Edit <i class="far fa-edit"></i>
@@ -72,6 +88,7 @@
                             Delete <i class="far fa-trash-alt"></i>
                         </button>
                     </td>
+                    <!-- End of actions -->
                 </tr>
             </tbody>
         </table>
@@ -115,6 +132,16 @@ export default {
                 .catch(error => {
                     this.form.errors.setErrors(error.response.data.errors);
                 });
+        },
+        toggleTodoClick(event) {
+            event.is_todo_done = !event.is_todo_done;
+            let newData = new FormData();
+
+            newData.append("_method", "PATCH");
+            event.is_todo_done == true && newData.append("is_todo_done", 1);
+            event.is_todo_done == false && newData.append("is_todo_done", 0);
+
+            axios.post("/api/todo/" + event.id, newData);
         }
     },
     mounted() {

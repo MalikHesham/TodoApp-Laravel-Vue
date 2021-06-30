@@ -1925,6 +1925,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["user"],
   data: function data() {
@@ -1960,6 +1977,14 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this2.form.errors.setErrors(error.response.data.errors);
       });
+    },
+    toggleTodoClick: function toggleTodoClick(event) {
+      event.is_todo_done = !event.is_todo_done;
+      var newData = new FormData();
+      newData.append("_method", "PATCH");
+      event.is_todo_done == true && newData.append("is_todo_done", 1);
+      event.is_todo_done == false && newData.append("is_todo_done", 0);
+      axios.post("/api/todo/" + event.id, newData);
     }
   },
   mounted: function mounted() {
@@ -37701,7 +37726,14 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success btn-sm border-success",
+              attrs: { type: "submit", id: "button-addon2" }
+            },
+            [_vm._v("\n                Create New Todo\n            ")]
+          )
         ])
       ]
     ),
@@ -37710,7 +37742,7 @@ var render = function() {
       ? _c(
           "div",
           {
-            staticClass: "card w-100 alert alert-danger alert-sm",
+            staticClass: "card w-100 alert alert-danger alert-sm mb-1",
             attrs: { role: "alert" }
           },
           [
@@ -37730,26 +37762,69 @@ var render = function() {
     _vm._v(" "),
     _c(
       "table",
-      { staticClass: "table table-hover table-primary" },
+      { staticClass: "table table-hover table-dark" },
       [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.allTodos, function(todo) {
           return _c("tbody", { key: todo.id, staticClass: "w-100" }, [
             _c("tr", [
-              todo.is_todo_done == false
-                ? _c("td", [_c("i", { staticClass: "far fa-circle" })])
-                : _vm._e(),
-              _vm._v(" "),
-              todo.is_todo_done == true
-                ? _c("td", [_vm._m(2, true)])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("td", { staticClass: "text-center" }, [
-                _vm._v(_vm._s(todo.title))
+              _c("td", [
+                todo.is_todo_done == false
+                  ? _c("span", [
+                      _c("i", {
+                        staticClass: "far fa-circle  fakeCheckBox",
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleTodoClick(todo)
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                todo.is_todo_done == true
+                  ? _c("span", [
+                      _c(
+                        "i",
+                        {
+                          staticClass: "far fa-check-circle fakeCheckBox",
+                          staticStyle: { color: "#1aff1a" },
+                          on: {
+                            click: function($event) {
+                              return _vm.toggleTodoClick(todo)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Done\n                        "
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(3, true)
+              _c("td", { staticClass: "text-center" }, [
+                todo.is_todo_done
+                  ? _c("s", { staticClass: "text-muted" }, [
+                      _c("h6", [_vm._v(_vm._s(todo.title))])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !todo.is_todo_done
+                  ? _c("h6", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(todo.title) +
+                          "\n                    "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(1, true)
             ])
           ])
         })
@@ -37763,42 +37838,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-success btn-sm border-success",
-        attrs: { type: "submit", id: "button-addon2" }
-      },
-      [_c("strong", [_vm._v("Create New Todo")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-          _vm._v("Task to be done")
+          _vm._v("Task")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
           _vm._v("Actions")
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("i", {
-        staticClass: "far fa-check-circle",
-        staticStyle: { color: "green" }
-      })
     ])
   },
   function() {

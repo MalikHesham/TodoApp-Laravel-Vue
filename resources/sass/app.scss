@@ -12,7 +12,7 @@ body {
     // background-color: #0093e9;
     // background-image: linear-gradient(90deg, #0093e9 0%, #80d0c7 100%);
 
-    background-image: linear-gradient(90deg, #30cfd0 0%, #330867 100%);
+    background-image: linear-gradient(90deg, #30cfd0 0%, #42137c 100%);
 }
 
 :root {
@@ -95,4 +95,7 @@ body {
     height: 30px;
     line-height: 30px;
     padding: 0px 15px;
+}
+.fakeCheckBox {
+    cursor: pointer;
 }

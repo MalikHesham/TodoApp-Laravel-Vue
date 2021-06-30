@@ -10003,7 +10003,7 @@ h3 {
   }
 }
 body {
-  background-image: linear-gradient(90deg, #30cfd0 0%, #330867 100%);
+  background-image: linear-gradient(90deg, #30cfd0 0%, #42137c 100%);
 }
 
 :root {
@@ -10085,4 +10085,8 @@ body {
   height: 30px;
   line-height: 30px;
   padding: 0px 15px;
+}
+
+.fakeCheckBox {
+  cursor: pointer;
 }
