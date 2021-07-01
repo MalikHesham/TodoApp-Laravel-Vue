@@ -121,9 +121,43 @@
                             <i class="fa fa-refresh" aria-hidden="true"></i>
                         </button>
 
-                        <button class="btn btn-danger btn-sm">
+                        <b-button
+                            id="show-btn"
+                            v-b-modal="'SecondaryModal' + todo.id"
+                            class="btn-danger"
+                        >
                             Delete <i class="far fa-trash-alt"></i>
-                        </button>
+                        </b-button>
+
+                        <b-modal
+                            :id="'SecondaryModal' + todo.id"
+                            hide-footer
+                            centered
+                            no-stacking
+                        >
+                            <template #modal-title>
+                                Deleting todo ...
+                            </template>
+                            <div class="d-block text-center">
+                                <h3>
+                                    Are you sure you want to delete
+                                    <span class="text-danger">{{
+                                        todo.title
+                                    }}</span>
+                                    ?
+                                </h3>
+                            </div>
+                            <b-button
+                                class="mt-3"
+                                @click="$bvModal.hide('bv-modal-example')"
+                                >Back</b-button
+                            >
+                            <b-button
+                                class="mt-3 btn-danger"
+                                @click="$bvModal.hide('bv-modal-example')"
+                                >Confirm</b-button
+                            >
+                        </b-modal>
                     </td>
                     <!-- End of actions -->
                 </tr>
