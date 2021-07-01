@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller {
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -74,9 +75,6 @@ class TodoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($todoId){
-        $deletedTodo = Todo::find($todoId);
-        $deletedTodo->delete();
-        return Todo::latest()->get();
 
     }
 }

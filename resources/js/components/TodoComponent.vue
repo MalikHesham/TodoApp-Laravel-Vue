@@ -180,9 +180,7 @@ export default {
             editing: -1
         };
     },
-    created() {
-        console.log(this.user_id);
-    },
+    created() {},
     methods: {
         getAllTodos() {
             axios
@@ -233,7 +231,10 @@ export default {
             let data = new FormData();
             data.append("_method", "DELETE");
             axios
-                .post("/api/todo/" + todo.id, data)
+                .post(
+                    "/api/todo/delete/" + todo.id + "/user/" + this.user_id,
+                    data
+                )
                 .then(res => {
                     this.allTodos = res.data;
                 })

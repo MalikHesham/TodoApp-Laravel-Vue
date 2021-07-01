@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
 use App\Models\Todo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::resource('todo', TodoController::class);
 
 // This route is made so the completed status of the todo doesn't cause error an
@@ -36,3 +38,14 @@ Route::get('todo/user/{id}', function($id) {
                 ->orderByRaw('created_at DESC')
                 ->get();
 });
+
+Route::delete('todo/delete/{todoId}/user/{userId}', function($id,$userID){
+    $deletedTodo = Todo::find($id);
+    $deletedTodo->delete();
+
+    return DB::table('todos')
+                ->where('user_id', $userID)
+                ->orderByRaw('created_at DESC')
+                ->get();
+});
+
