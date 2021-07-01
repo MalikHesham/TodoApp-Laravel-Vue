@@ -16,6 +16,8 @@ class CreateTodosTable extends Migration {
             $table->string('title');
             $table->boolean('is_todo_done')->default(0);
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

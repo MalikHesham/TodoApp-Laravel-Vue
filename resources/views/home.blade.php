@@ -8,7 +8,10 @@
             Where all of your todos are easily organized
         </h4>
         @if(Auth::check())
-        <todo-component :user="{{Auth::user()}}"></todo-component>
+        <todo-component
+            :user="{{Auth::user()}}"
+            :user_id="{{Auth::id()}}"
+        ></todo-component>
         @endif
     </div>
 </div>

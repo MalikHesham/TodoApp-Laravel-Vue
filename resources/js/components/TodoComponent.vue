@@ -139,13 +139,13 @@
                                 Deleting todo ...
                             </template>
                             <div class="d-block text-center">
-                                <h3>
-                                    Are you sure you want to delete
+                                <h5>
+                                    Are you sure you want to delete the
                                     <span class="text-danger">{{
                                         todo.title
                                     }}</span>
-                                    ?
-                                </h3>
+                                    task?
+                                </h5>
                             </div>
                             <b-button
                                 class="mt-3"
@@ -170,7 +170,7 @@
 
 <script>
 export default {
-    props: ["user"],
+    props: ["user", "user_id"],
     data() {
         return {
             form: new Form({
@@ -181,12 +181,12 @@ export default {
         };
     },
     created() {
-        console.log(this.user);
+        console.log(this.user_id);
     },
     methods: {
         getAllTodos() {
             axios
-                .get("/api/todo")
+                .get("/api/todo/user/" + this.user_id)
                 .then(res => {
                     this.allTodos = res.data;
                 })
@@ -197,6 +197,7 @@ export default {
         postNewTodo() {
             let data = new FormData();
             data.append("title", this.form.title);
+            data.append("user_id", this.user_id);
             axios
                 .post("/api/todo", data)
                 .then(res => {

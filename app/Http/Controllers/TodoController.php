@@ -6,18 +6,9 @@ use App\Http\Requests\TodoValidationRequest;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TodoController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    public function index() {
-        return Todo::latest()->get();
-    }
+class TodoController extends Controller {
 
     /**
      * Show the form for creating a new resource.
