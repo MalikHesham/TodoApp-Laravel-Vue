@@ -82,8 +82,10 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todo $todo)
-    {
-        //
+    public function destroy($todoId){
+        $deletedTodo = Todo::find($todoId);
+        $deletedTodo->delete();
+        return Todo::latest()->get();
+
     }
 }

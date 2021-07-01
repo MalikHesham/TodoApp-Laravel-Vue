@@ -10063,7 +10063,7 @@ body {
 
 .login-wrapper {
   max-width: 70vw;
-  border-radius: 36px;
+  border-radius: 38px !important;
   overflow: hidden;
   border-style: none;
 }
@@ -10084,7 +10084,7 @@ body {
   margin-bottom: 1px;
   height: 30px;
   line-height: 30px;
-  padding: 0px 15px;
+  padding: 0px 15px !important;
 }
 
 .fakeCheckBox {

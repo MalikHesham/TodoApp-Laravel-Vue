@@ -149,12 +149,14 @@
                             </div>
                             <b-button
                                 class="mt-3"
-                                @click="$bvModal.hide('bv-modal-example')"
+                                @click="
+                                    $bvModal.hide('SecondaryModal' + todo.id)
+                                "
                                 >Back</b-button
                             >
                             <b-button
                                 class="mt-3 btn-danger"
-                                @click="$bvModal.hide('bv-modal-example')"
+                                @click="deleteTodo(todo)"
                                 >Confirm</b-button
                             >
                         </b-modal>
@@ -225,6 +227,18 @@ export default {
                 this.form.errors.setErrors(error.response.data.errors);
             });
             this.getAllTodos();
+        },
+        deleteTodo(todo) {
+            let data = new FormData();
+            data.append("_method", "DELETE");
+            axios
+                .post("/api/todo/" + todo.id, data)
+                .then(res => {
+                    this.allTodos = res.data;
+                })
+                .catch(error => {
+                    this.form.errors.setErrors(error.response.data.errors);
+                });
         }
     },
     mounted() {
