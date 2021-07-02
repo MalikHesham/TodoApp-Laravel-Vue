@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Models\User;
+use Carbon\Factory;
+use Mockery;
 use Tests\TestCase;
 
 class LoginTest extends TestCase {
@@ -23,8 +26,26 @@ class LoginTest extends TestCase {
      *
      * @test
      */
-    function test_making_sure_that_get_requests_redirects_to_login_if_user_is_not_authenticated(){
+    public function test_making_sure_that_get_requests_redirects_to_login_if_user_is_not_authenticated(){
         $response = $this->get('/home');
         $response->assertRedirect('/login');
+    }
+
+    /**
+     *
+     * @test
+     */
+    public function test_authenticated_user_can_log_in_and_gets_redirected_to_slash_home(){
+
+        $user = User::factory()->create();
+
+        $response = $this->post('/login',[
+            'email' => $user->email,
+            'password' =>'password'
+        ]);
+
+        $this->assertAuthenticated();
+
+        $response->assertRedirect('/home');
     }
 }
