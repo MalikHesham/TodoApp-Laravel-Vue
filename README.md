@@ -17,6 +17,7 @@ This is a todo list app created using laravel 8 in the back-end and vue3 in fron
   <img src="public/images/readme/editingTask.png" width="400">
   <img src="public/images/readme/deleteTask.png" width="400">
 </p>
+
 #### Back-end
 - [Laravel 8](https://laravel.com/)
 
