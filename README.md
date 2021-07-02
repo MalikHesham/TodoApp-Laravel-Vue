@@ -1,6 +1,22 @@
 ## Laravel Vue Todo App
 This is a todo list app created using laravel 8 in the back-end and vue3 in front-end to manage a user CRUD operation on their todos.
 
+
+<p float="left">
+  <img src="public/images/readme/loginPage.png" width="400">
+  <img src="public/images/readme/registerPage.png" width="400">
+</p>
+
+
+<p float="left">
+  <img src="public/images/readme/homePage.png" width="400">
+  <img src="public/images/readme/tasksWithDone.png" width="400">
+</p>
+
+<p float="left">
+  <img src="public/images/readme/editingTask.png" width="400">
+  <img src="public/images/readme/deleteTask.png" width="400">
+</p>
 #### Back-end
 - [Laravel 8](https://laravel.com/)
 
@@ -28,6 +44,9 @@ This is a todo list app created using laravel 8 in the back-end and vue3 in fron
 4. The user can't change the status and update the title at the same time so if the title is being updated, the mark done buttons are hidden. A marked done todo can't be edited and the edit button is changed to disabled.
 5. Users are asked if they really want to delete a todo in a confirmation message in the form of a pop-up modal.
 6. Every user can do CRUD operation on only their own todos.
+7. Adding and updating a todo constraints:
+a) Title must be unique and not less than 3 characters.
+b) Todo title can't be an empty string.
 
 
 
