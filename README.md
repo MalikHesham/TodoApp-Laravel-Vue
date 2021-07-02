@@ -45,8 +45,8 @@ This is a todo list app created using laravel 8 in the back-end and vue3 in fron
 5. Users are asked if they really want to delete a todo in a confirmation message in the form of a pop-up modal.
 6. Every user can do CRUD operation on only their own todos.
 7. Adding and updating a todo constraints:
-a) Title must be unique and not less than 3 characters.
-b) Todo title can't be an empty string.
+  - Title must be unique and not less than 3 characters.
+  - Todo title can't be an empty string.
 
 
 
