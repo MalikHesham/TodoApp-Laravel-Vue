@@ -147,18 +147,22 @@
                                     task?
                                 </h5>
                             </div>
-                            <b-button
-                                class="mt-3"
-                                @click="
-                                    $bvModal.hide('SecondaryModal' + todo.id)
-                                "
-                                >Back</b-button
-                            >
-                            <b-button
-                                class="mt-3 btn-danger"
-                                @click="deleteTodo(todo)"
-                                >Confirm</b-button
-                            >
+                            <div class="text-right">
+                                <b-button
+                                    class="mt-3"
+                                    @click="
+                                        $bvModal.hide(
+                                            'SecondaryModal' + todo.id
+                                        )
+                                    "
+                                    >Back</b-button
+                                >
+                                <b-button
+                                    class="mt-3 btn-danger"
+                                    @click="deleteTodo(todo)"
+                                    >Confirm</b-button
+                                >
+                            </div>
                         </b-modal>
                     </td>
                     <!-- End of actions -->
