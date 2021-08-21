@@ -188,7 +188,7 @@ export default {
     methods: {
         getAllTodos() {
             axios
-                .get("/api/todo/user/" + this.user_id)
+                .get(`/api/v1/user/${this.user_id}/todos`)
                 .then(res => {
                     this.allTodos = res.data;
                 })
@@ -201,7 +201,7 @@ export default {
             data.append("title", this.form.title);
             data.append("user_id", this.user_id);
             axios
-                .post("/api/todo", data)
+                .post(`/api/v1/user/${this.user_id}/todos`, data)
                 .then(res => {
                     this.form.resetFormData();
                     this.getAllTodos();
@@ -218,27 +218,29 @@ export default {
             event.is_todo_done == true && newData.append("is_todo_done", 1);
             event.is_todo_done == false && newData.append("is_todo_done", 0);
 
-            axios.post("/api/todo/status/" + event.id, newData);
+            axios.post(
+                `api/v1/user/${this.user_id}/todos/${event.id}/state=${event.is_todo_done}`,
+                newData
+            );
         },
         updateTodo(event) {
             this.editing = -1;
             let data = new FormData();
 
-            data.append("_method", "PATCH");
+            data.append("_method", "PUT");
             data.append("title", event.title);
-            axios.post("/api/todo/" + event.id, data).catch(error => {
-                this.form.errors.setErrors(error.response.data.errors);
-            });
+            axios
+                .post(`api/v1/user/${this.user_id}/todos/${event.id}`, data)
+                .catch(error => {
+                    this.form.errors.setErrors(error.response.data.errors);
+                });
             this.getAllTodos();
         },
         deleteTodo(todo) {
             let data = new FormData();
             data.append("_method", "DELETE");
             axios
-                .post(
-                    "/api/todo/delete/" + todo.id + "/user/" + this.user_id,
-                    data
-                )
+                .post(`api/v1/user/${this.user_id}/todos/${todo.id}`, data)
                 .then(res => {
                     this.allTodos = res.data;
                 })

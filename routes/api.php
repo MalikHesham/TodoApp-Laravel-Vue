@@ -22,30 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('todo', TodoController::class);
-
-// This route is made so the completed status of the todo doesn't cause error an
-// on title uniqueness validation
-Route::put('todo/status/{id}', function(Request $request, $id) {
-    $todo = Todo::findOrFail($id);
-    $todo ->update($request->all());
-    $todo->save();
-});
-
-Route::get('todo/user/{id}', function($id) {
-    return DB::table('todos')
-                ->where('user_id', $id)
-                ->orderByRaw('created_at DESC')
-                ->get();
-});
-
-Route::delete('todo/delete/{todoId}/user/{userId}', function($id,$userID){
-    $deletedTodo = Todo::find($id);
-    $deletedTodo->delete();
-
-    return DB::table('todos')
-                ->where('user_id', $userID)
-                ->orderByRaw('created_at DESC')
-                ->get();
-});
+Route::prefix('/v1/user/{id}/todos')->group( function () {
+              
+    Route::get(   '/',                    [TodoController::class, 'index']);
+    Route::post(  '/',                    [TodoController::class, 'store']);
+    Route::put(   '/{todo}',              [TodoController::class, 'update']);
+    Route::put(   '/{todo}/state={state}',[TodoController::class, 'update']);
+    Route::delete('/{todo}',              [TodoController::class, 'destroy']);
+            
+}) ;
 
